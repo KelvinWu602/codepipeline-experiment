@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
 import { Construct } from 'constructs';
+import { CdkWorkshopPipelineStage } from './pipeline-stage';
 
 export class WorkshopPipelineStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -10,8 +11,19 @@ export class WorkshopPipelineStack extends cdk.Stack {
             pipelineName: 'WorkshopPipeline',
             synth: new ShellStep('Synth', {
                 input: CodePipelineSource.gitHub('KelvinWu602/codepipeline-experiment', 'main'),
-                commands: ['echo "Hello world!!!!!!!"']
+                installCommands: [
+                    'npm install -g aws-cdk'
+                ],
+                commands: [
+                    'npm ci',
+                    'npm run build',
+                    'npx cdk synth'
+                ]
             })
-        })
+        });
+
+
+        const deploy = new CdkWorkshopPipelineStage(this,'Deploy');
+        const deployStage = pipeline.addStage(deploy);
     }
 }
