@@ -1,0 +1,19 @@
+{
+  "version": "36.0.0",
+  "files": {
+    "9616aabc9762e9b61612445d07b4857814e70116a10eaee1ae5b1a705be2bfed": {
+      "source": {
+        "path": "CdkWorkshopPipelineStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "9616aabc9762e9b61612445d07b4857814e70116a10eaee1ae5b1a705be2bfed.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
