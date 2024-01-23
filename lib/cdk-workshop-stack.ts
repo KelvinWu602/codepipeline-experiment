@@ -4,6 +4,8 @@ import * as apigw from 'aws-cdk-lib/aws-apigateway';
 import { Construct } from 'constructs';
 
 export class CdkWorkshopStack extends cdk.Stack {
+  public readonly endpointUrl: cdk.CfnOutput;
+
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -13,8 +15,12 @@ export class CdkWorkshopStack extends cdk.Stack {
       handler: 'hello.handler'
     });
 
-    new apigw.LambdaRestApi(this, 'Endpoint', {
+    const gateway = new apigw.LambdaRestApi(this, 'Endpoint', {
       handler: hello
+    });
+
+    this.endpointUrl = new cdk.CfnOutput(this,'url', {
+      value: gateway.url
     });
   }
 }
